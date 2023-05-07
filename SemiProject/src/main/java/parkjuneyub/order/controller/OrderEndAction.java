@@ -42,27 +42,32 @@ public class OrderEndAction extends AbstractController {
 		HttpSession session = request.getSession();
 		MemberVO loginuser = (MemberVO)session.getAttribute("loginuser");
 		
+		// 상품 정보
+		String joinEachProductNum = request.getParameter("joinEachProductNum");
+		String joinEachProductCnt = request.getParameter("joinEachProductCnt");
+		String joinEachProductPrice = request.getParameter("joinEachProductPrice");
+		String joinEachCartNum = request.getParameter("joinEachCartNum");
+		
+		// 주문자 정보
 		String order_name = request.getParameter("order_name");
 		String order_phone = request.getParameter("order_phone");
 		String order_mobile = request.getParameter("order_mobile");
 		String order_email = request.getParameter("order_email");
+		
+		// 배송 정보
 		String receive_name = request.getParameter("receive_name");
 		String receive_phone = request.getParameter("receive_phone");
 		String receive_mobile = request.getParameter("receive_mobile");
 		String receive_last_say = request.getParameter("receive_last_say");
-		String useMileage = request.getParameter("useMileage");
-		String productNum_join = request.getParameter("productNum_join");
-		String productCnt_join = request.getParameter("productCnt_join");
-		String productPrice_join = request.getParameter("productPrice_join");
-		String productMileage_join = request.getParameter("productMileage_join");
-		String save_mileage = request.getParameter("save_mileage");
-		String finalTotalPrice = request.getParameter("finalTotalPrice");
-		String cart_num_join = request.getParameter("cart_num_join");
-		System.out.println("cart_num_join "+ cart_num_join);
 		String postcode = request.getParameter("postcode");
 		String address = request.getParameter("address");
 		String detailAddress = request.getParameter("detailAddress");
 		String extraAddress = request.getParameter("extraAddress");
+		
+		// 결제 정보
+		String useMileage = request.getParameter("useMileage");
+		String saveMileage = request.getParameter("saveMileage");
+		String finalTotalPrice = request.getParameter("finalTotalPrice");
 		
 		HashMap<String, Object> paraMap = new HashMap<>();
 		
@@ -76,10 +81,10 @@ public class OrderEndAction extends AbstractController {
 		}
 		paraMap.put("useMileage", useMileage);
 		
-		if(save_mileage.isEmpty()) {
-			save_mileage = "0";
+		if(saveMileage.isEmpty()) {
+			saveMileage = "0";
 		}
-		paraMap.put("save_mileage", save_mileage);
+		paraMap.put("saveMileage", saveMileage);
 		
 		if(finalTotalPrice.isEmpty()) {
 			finalTotalPrice = "0";
@@ -87,9 +92,9 @@ public class OrderEndAction extends AbstractController {
 		paraMap.put("finalTotalPrice", finalTotalPrice);
 		
 		// 주문 상세 테이블에 insert 할 데이터들
-		paraMap.put("productNum_arr", productNum_join.split("\\,")); // 제품 아이디
-		paraMap.put("productCnt_arr", productCnt_join.split("\\,"));  // 수량
-		paraMap.put("productPrice_arr", productPrice_join.split("\\,")); // 제품 각각의 판매가격
+		paraMap.put("productNum_arr", joinEachProductNum.split("\\,")); // 제품 아이디
+		paraMap.put("productCnt_arr", joinEachProductCnt.split("\\,"));  // 수량
+		paraMap.put("productPrice_arr", joinEachProductPrice.split("\\,")); // 제품 각각의 판매가격
 		
 		paraMap.put("order_name", order_name);
 		paraMap.put("order_phone", order_phone);
@@ -104,8 +109,8 @@ public class OrderEndAction extends AbstractController {
 		paraMap.put("detailAddress", detailAddress);
 		paraMap.put("extraAddress", extraAddress);
 		
-		if(cart_num_join != null) {
-			paraMap.put("cart_num_join", cart_num_join);
+		if(joinEachCartNum != null) {
+			paraMap.put("cart_num_join", joinEachCartNum);
 		}
 		
 		int isSuccess = pdao.orderAdd(paraMap);
@@ -121,14 +126,14 @@ public class OrderEndAction extends AbstractController {
 			String orderTime = sdf.format(now);
 			ovo.setOrder_date(orderTime);
 			
-			String[] productNum_arr = productNum_join.split("\\,");
+			String[] productNum_arr = joinEachProductNum.split("\\,");
 			List<ProductVO> productList = pdao.getPvoListByPnum(productNum_arr);
 			
 			
 			String recipt_address = "우편번호("+postcode + ") " + postcode + " " + detailAddress + " " + extraAddress;
 			request.setAttribute("ovo", ovo);
 			request.setAttribute("recipt_address", recipt_address);
-			request.setAttribute("save_mileage", save_mileage);
+			request.setAttribute("saveMileage", saveMileage);
 			request.setAttribute("order_name", order_name);
 			request.setAttribute("productList", productList);
 		
@@ -138,7 +143,7 @@ public class OrderEndAction extends AbstractController {
 	    //      이어서 주문이 완료되었다라는 email 보내주기  **** //
 		
 			// 세션에 저장되어져 있는 loginuser 정보를 갱신
-			loginuser.setMileage(loginuser.getMileage() - Integer.parseInt(useMileage) + Integer.parseInt(save_mileage));
+			loginuser.setMileage(loginuser.getMileage() - Integer.parseInt(useMileage) + Integer.parseInt(saveMileage));
 			
 			//// == 주문이 완료되었다는 mail 보내기 시작 == ////
 			GoogleMail mail = new GoogleMail();
@@ -194,8 +199,8 @@ public class OrderEndAction extends AbstractController {
 					+ "    		<th><span class=\"order_important\">마일리지 적립/사용</span></th>\r\n"
 					+ "  <td>\r\n"
 					+ "      <ul class=\"order_benefit_list\"> \r\n"
-					+ "   		<li>마일리지 적립 : <span class='save_mileage'>"+save_mileage+"</span>원</li>\r\n"
-					+ "   		<li>마일리지 사용 : <span class='save_mileage'>"+ovo.getOrder_mileage_total()+"</span>원</li>\r\n"
+					+ "   		<li>마일리지 적립 : <span class='saveMileage'>"+saveMileage+"</span>원</li>\r\n"
+					+ "   		<li>마일리지 사용 : <span class='saveMileage'>"+ovo.getOrder_mileage_total()+"</span>원</li>\r\n"
 					+ "   	</ul>\r\n"
 					+ " </td>\r\n"
 					+ " </tr>\r\n"

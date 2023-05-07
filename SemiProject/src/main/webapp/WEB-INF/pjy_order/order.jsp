@@ -2,7 +2,7 @@
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-    
+ 
 <%
 	String ctxPath = request.getContextPath();
 	// SemiProject
@@ -103,9 +103,6 @@
 			
 		}); <%-- end of $(document).ready(function () --%>
 
-		
-
-		
 		function email_domain_change() {
 			
 			var target = $("select.emailDomain_select").val()
@@ -243,7 +240,6 @@
 			
 			const all_product_len = $("input.productMileage").length;
 
-			
 			const productNum_arr = [];
 			const productCnt_arr = [];
 			const productPrice_arr = [];
@@ -251,15 +247,12 @@
 			const eachProductTotalPrice_arr = [];
 			const cartNo_arr =[];
 			
-
-			
 			for(let i = 0; i < all_product_len; i++) {
-				productNum_arr.push( $("input.productNum").eq(i).val());
-				productCnt_arr.push( $("input.productCnt").eq(i).val());
-				productPrice_arr.push( $("input.productPrice").eq(i).val());
-				productMileage_arr.push( $("input.productMileage").eq(i).val());
-				cartNo_arr.push($("input.cartNo").eq(i).val());
-				eachProductTotalPrice_arr.push( $("input.eachProductTotalPrice").eq(i).val());
+				productNum_arr.push( $("input.each-product-num").eq(i).val());
+				productCnt_arr.push( $("input.each-product-cnt").eq(i).val());
+				productPrice_arr.push( $("input.each-product-price").eq(i).val());
+				productMileage_arr.push( $("input.each-product-mileage").eq(i).val());
+				eachProductTotalPrice_arr.push( $("input.each-product-result-price").eq(i).val());
 			}
 			
 			const productNum_join = productNum_arr.join();
@@ -267,45 +260,24 @@
 			const productPrice_join = productPrice_arr.join();
 			const productMileage_join = productMileage_arr.join();
 			const eachProductTotalPrice_join = eachProductTotalPrice_arr.join();
-			const cartNo_join = cartNo_arr.join();
 			
-			$("input#productNum_join").val(productNum_join);
-			$("input#productCnt_join").val(productCnt_join);
-			$("input#productPrice_join").val(productPrice_join);
-			$("input#productMileage_join").val(productMileage_join);
-			$("input#eachProductTotalPrice_join").val(eachProductTotalPrice_join);
-			$("input#cartNo_join").val(cartNo_join);
-			
-			console.log($("input#productNum_join").val());
-			console.log($("input#productCnt_join").val());
-			console.log($("input#productPrice_join").val());
-			console.log($("input#productMileage_join").val());
-			console.log($("input#eachProductTotalPrice_join").val());
-			console.log($("input#cartNo_join").val());
+			$("input#joinEachProductNum").val(productNum_join);
+			$("input#joinEachProductCnt").val(productCnt_join);
+			$("input#joinEachProductPrice").val(productPrice_join);
+			$("input#joinEachProductMileage").val(productMileage_join);
+			$("input#joinEachProductTotalPrice").val(eachProductTotalPrice_join);
 			
 			goPurchaseEnd();
-			/* var queryString = $("form#frmOrder").serialize(); */
-/* 			var queryString = $("form#frmOrder").serializeArray();
-			queryString.push({name : "productNum_join", value:productNum_join });
-			queryString.push({name : "productCnt_join", value:productCnt_join });
-			queryString.push({name : "productPrice_join", value:productPrice_join });
-			queryString.push({name : "productMileage_join", value:productMileage_join });
-			queryString.push({name : "eachProductTotalPrice_join", value:eachProductTotalPrice_join });
-			queryString.push({name : "cartNo_join", value:cartNo_join }); */
 			
-			
-
 		}; // end of  function checkOrderDetail()
 		
 		function checkUseMileageAll() {
 			const myMileage = Number(${requestScope.mvo.mileage});
 			$("input#useMileage").val(myMileage);
-			
 			useMileageAndUpdate();
 		}
 		
 		function useMileageAndUpdate() {
-			
 			// 최종 결제 금액 갱신
 			var price = Number($("strong#total_price_plus_delivery_fee").val());
 			var result = price - Number($("input#useMileage").val());
@@ -346,10 +318,6 @@
         new daum.Postcode({
             oncomplete: function(data) {
                 // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
-
-                
-                
-                
                 // 각 주소의 노출 규칙에 따라 주소를 조합한다.
                 // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
                 var addr = ''; // 주소 변수
@@ -402,13 +370,13 @@
                     <div class="order_sub_content">
                         <div class="order_sub_content_box">
                             <form id="frmOrder" name="frmOrder" >
-								<input type="hidden" id="cart_num_join" name="cart_num_join" value="${requestScope.cart_num}" />
-								<input type="hidden" id="productNum_join" name="productNum_join" />
-								<input type="hidden" id="productCnt_join" name="productCnt_join" />
-								<input type="hidden" id="productPrice_join" name="productPrice_join" />
-								<input type="hidden" id="productMileage_join" name="productMileage_join" />
-								<input type="hidden" id="eachProductTotalPrice_join" name="eachProductTotalPrice_join" />
-								<input type="hidden" id="cartNo_join" name="cartNo_join" />
+								<input type="hidden" id="joinEachCartNum" name="joinEachCartNum" value="${requestScope.joinCartNum}" />
+								<input type="hidden" id="joinEachProductNum" name="joinEachProductNum" />
+								<input type="hidden" id="joinEachProductCnt" name="joinEachProductCnt" />
+								<input type="hidden" id="joinEachProductPrice" name="joinEachProductPrice" />
+								<input type="hidden" id="joinEachProductMileage" name="joinEachProductMileage" />
+								<input type="hidden" id="joinEachProductTotalPrice" name="joinEachProductTotalPrice" />
+								<input type="hidden" id="joinEachCartNo" name="joinEachCartNo" />
 								
 								
                                 <div class="order_wrap">
@@ -444,27 +412,27 @@
                                                     <c:if test="${not empty requestScope.buyItem_map}">
                                                         <tr class="order_goods_layout">
                                                             <td>${requestScope.buyItem_map.product_title}
-                                                            <input class="productNum" type="hidden" value="${requestScope.buyItem_map.product_num}" />
+                                                            <input class="each-product-num" type="hidden" value="${requestScope.buyItem_map.product_num}" />
                                                             </td>
                                                             
                                                             <td>${requestScope.buyItem_map.product_cnt}
-                                                            <input class="productCnt" type="hidden" value="${requestScope.buyItem_map.product_cnt}" />
+                                                            <input class="each-product-cnt" type="hidden" value="${requestScope.buyItem_map.product_cnt}" />
                                                             </td>
                                                             
                                                             <td>
                                                             <fmt:formatNumber value="${requestScope.buyItem_map.product_price}" pattern="#,###" />
-                                                            <input class="productPrice" type="hidden" value="${requestScope.buyItem_map.product_price}" />
+                                                            <input class="each-product-price" type="hidden" value="${requestScope.buyItem_map.product_price}" />
                                                             </td>
                                                             
                                                             <td><fmt:formatNumber value="${requestScope.buyItem_map.product_mileage}" pattern="#,###" />
-                                                            <input class="productMileage" type="hidden" value="${requestScope.buyItem_map.product_mileage}" />
+                                                            <input class="each-product-mileage" type="hidden" value="${requestScope.buyItem_map.product_mileage}" />
                                                             </td>
                                                             
                                                             <td class="priceMultiCountResult">
                                                             <fmt:parseNumber var="cnt" integerOnly="true" value="${requestScope.buyItem_map.product_cnt}" />
                                                             <fmt:parseNumber var="price" integerOnly="true" value="${requestScope.buyItem_map.product_price}" />
                                                             <fmt:formatNumber value="${cnt*price}" pattern="#,###" />
-                                                            <input class="eachProductTotalPrice" type="hidden" value="${cnt*price}" />
+                                                            <input class="each-product-result-price" type="hidden" value="${cnt*price}" />
                                                             </td>
                                                             
                                                         </tr>
@@ -484,27 +452,27 @@
 						                                                <span class="cart_pname"><a href="/SemiProject/productDeatail.ban?product_num=${cartvo.pvo.product_num}">${cartvo.pvo.product_title}</a></span>
 						                                                </div>
 						                                            </div>
-						                                            <input class="productNum" type="hidden" value="${cartvo.pvo.product_num}" />
+						                                            <input class="each-product-num" type="hidden" value="${cartvo.pvo.product_num}" />
 						                                        </td>
 	                              
 	                                                            <td>${cartvo.product_count}
-	                                                            <input class="productCnt" type="hidden" value="${cartvo.product_count}" />
+	                                                            <input class="each-product-cnt" type="hidden" value="${cartvo.product_count}" />
 	                                                            </td>
 	                                                            
 	                                                            <td>
 	                                                            <fmt:formatNumber value="${cartvo.pvo.product_price}" pattern="#,###" />
-	                                                            <input class="productPrice" type="hidden" value="${cartvo.pvo.product_price}" />
+	                                                            <input class="each-product-price" type="hidden" value="${cartvo.pvo.product_price}" />
 	                                                            </td>
 	                                                            
 	                                                            <td><fmt:formatNumber value="${cartvo.totalMileage}" pattern="#,###" /> 마일리지
-	                                                            <input class="productMileage" type="hidden" value="${cartvo.totalMileage}" />
+	                                                            <input class="each-product-mileage" type="hidden" value="${cartvo.totalMileage}" />
 	                                                            </td>
 	                                                            
 	                                                            <td class="priceMultiCountResult">
 	                                                            <fmt:parseNumber var="cnt" integerOnly="true" value="${cartvo.product_count}" />
 	                                                            <fmt:parseNumber var="price" integerOnly="true" value="${cartvo.pvo.product_price}" />
 	                                                            <fmt:formatNumber value="${cnt*price}" pattern="#,###" />
-	                                                            <input class="eachProductTotalPrice" type="hidden" value="${cnt*price}" />
+	                                                            <input class="each-product-result-price" type="hidden" value="${cnt*price}" />
 	                                                            </td>
 	                                                            
 	                                                        </tr>
@@ -567,48 +535,49 @@
                                                     <h3 class="title_h3">주문자 정보</h3>
                                                 </div>
                                                 <div class="order_table_type">
-                                                    <table class="table_left">
+                                                    	<table class="table_left">
                                                         <colgroup>
-                                                            <col style="width:20%">
-                                                            <col style="width:80%">
+                                                         <col style="width:20%">
+                                                         <col style="width:80%">
                                                         </colgroup>
                                                         <tbody>
-                                                            <tr>
-                                                                <th><span class="order_important">*주문하시는 분</span></th>
-                                                                <td><input type="text" name="order_name" id="order_name" value="${requestScope.mvo.user_name}"></td>
-                                                            </tr>
-                                                            <tr>
-                                                                <th><span class="order_important">주소</span></th>
-                                                                <td>${requestScope.mvo.address}</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <th><span class="order_important">전화번호</span></th>
-                                                                <td><input type="text" name="order_phone" id="order_phone" value="${requestScope.mvo.telephone}">&nbsp; '-' 를 제외하고 입력해주세요</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <th><span class="order_important">*휴대폰 번호</span></th>
-                                                                <td><input type="text" name="order_mobile" id="order_mobile" value="${requestScope.mvo.mobile}">&nbsp; '-' 를 제외하고 입력해주세요</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <th><span class="order_important">*이메일</span></th>
-                                                                <td><input type="text" name="order_email" id="order_email" value="${requestScope.mvo.email}">
-                                                                    <select name="emailDomain_select" class="emailDomain_select">
-                                                                        <option value="직접입력">직접입력</option>
-                                                                        <option value="naver.com">naver.com</option>
-                                                                        <option value="hanmail.net">hanmail.net</option>
-                                                                        <option value="daum.net">daum.net</option>
-                                                                        <option value="nate.com">nate.com</option>
-                                                                        <option value="hotmail.com">hotmail.com</option>
-                                                                        <option value="gmail.com">gmail.com</option>
-                                                                        <option value="icloud.com">icloud.com</option>
-                                                                    </select>
-                                                                </td>
-                                                            </tr>
-
-
-                                                            
+                                                        <tr>
+                                                        <th><span class="order_important">*주문하시는 분</span></th>
+                                                        <td><input type="text" name="order_name" id="order_name" value="${requestScope.mvo.user_name}"></td>
+                                                        </tr>
+                                                        
+                                                        <tr>
+                                                        <th><span class="order_important">주소</span></th>
+                                                        <td>${requestScope.mvo.address}</td>
+                                                        </tr>
+                                                        
+                                                        <tr>
+                                                        <th><span class="order_important">전화번호</span></th>
+                                                        <td><input type="text" name="order_phone" id="order_phone" value="${requestScope.mvo.telephone}">&nbsp; '-' 를 제외하고 입력해주세요</td>
+                                                        </tr>
+                                                        
+                                                        <tr>
+                                                        <th><span class="order_important">*휴대폰 번호</span></th>
+                                                        <td><input type="text" name="order_mobile" id="order_mobile" value="${requestScope.mvo.mobile}">&nbsp; '-' 를 제외하고 입력해주세요</td>
+                                                        </tr>
+                                                        
+                                                        <tr>
+                                                        <th><span class="order_important">*이메일</span></th>
+                                                        <td><input type="text" name="order_email" id="order_email" value="${requestScope.mvo.email}">
+                                                        <select name="emailDomain_select" class="emailDomain_select">
+	                                                        <option value="직접입력">직접입력</option>
+	                                                        <option value="naver.com">naver.com</option>
+	                                                        <option value="hanmail.net">hanmail.net</option>
+	                                                        <option value="daum.net">daum.net</option>
+	                                                        <option value="nate.com">nate.com</option>
+	                                                        <option value="hotmail.com">hotmail.com</option>
+	                                                        <option value="gmail.com">gmail.com</option>
+	                                                        <option value="icloud.com">icloud.com</option>
+                                                        </select>
+                                                        </td>
+                                                        </tr>    
                                                         </tbody>
-                                                    </table>
+                                                    	</table>
                                                 </div>
                                                 <!-- 주문자 정보 -->
 
@@ -617,45 +586,50 @@
                                                 </div>
                                                 <div class="order_table_type shipping_info">
                                                     <table class="table_left shipping_info_table">
-                                                        <colgroup>
-                                                            <col style="width:20%">
-                                                            <col style="width:80%">
-                                                        </colgroup>
-                                                        <tbody>
-                                                            <tr>
-                                                                <th><span class="order_important">*받으시는 분</span></th>
-                                                                <td><input type="text" name="receive_name" id="receive_name"></td>
-                                                            </tr>
-                                                            <tr>
-                                                                <th><span class="order_important">*받으실 곳</span></th>
-                                                                <td>
-																	<div class="address_postcode">
-																		<input type="text" id="postcode" name="postcode" placeholder="우편번호">
-																		<input type="button" id="zipcodeSearch" onclick="sample6_execDaumPostcode()" value="우편번호 찾기"><br>
-																	</div>
-																	<div class="address_input">
-																		<input type="text" id="address" name="address" placeholder="주소"><br>
-																		<input type="text" id="detailAddress"  name="detailAddress" placeholder="상세주소">
-																		<input type="text" id="extraAddress" name="extraAddress" placeholder="참고항목">
-																	</div>
-                                                                	
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <th><span class="order_important">전화번호</span></th>
-                                                                <td><input type="text" name="receive_phone" id="receive_phone">&nbsp; '-' 를 제외하고 입력해주세요</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <th><span class="order_important">*휴대폰 번호</span></th>
-                                                                <td><input type="text" name="receive_mobile" id="receive_mobile">&nbsp; '-' 를 제외하고 입력해주세요</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <th><span class="order_important">남기실 말씀</span></th>
-                                                                <td>
-                                                                    <input type="text" name="receive_last_say" id="receive_last_say">
-                                                                </td>
-                                                            </tr>
-                                                        </tbody>
+                                                    <colgroup>
+                                                    <col style="width:20%">
+                                                    <col style="width:80%">
+                                                    </colgroup>
+                                                    <tbody>
+                                                    <tr>
+                                                    <th><span class="order_important">*받으시는 분</span></th>
+                                                    <td><input type="text" name="receive_name" id="receive_name"></td>
+                                                    </tr>
+                                                    
+                                                    <tr>
+                                                    <th><span class="order_important">*받으실 곳</span></th>
+                                                    <td>
+														<div class="address_postcode">
+															<input type="text" id="postcode" name="postcode" placeholder="우편번호">
+															<input type="button" id="zipcodeSearch" onclick="sample6_execDaumPostcode()" value="우편번호 찾기"><br>
+														</div>
+														<div class="address_input">
+															<input type="text" id="address" name="address" placeholder="주소"><br>
+															<input type="text" id="detailAddress"  name="detailAddress" placeholder="상세주소">
+															<input type="text" id="extraAddress" name="extraAddress" placeholder="참고항목">
+														</div>
+                                                            	
+                                                   	</td>
+                                                    </tr>
+                                                    
+                                                    <tr>
+                                                    <th><span class="order_important">전화번호</span></th>
+                                                    <td><input type="text" name="receive_phone" id="receive_phone">&nbsp; '-' 를 제외하고 입력해주세요</td>
+                                                    </tr>
+                                                    
+                                                    <tr>
+                                                    <th><span class="order_important">*휴대폰 번호</span></th>
+                                                    <td><input type="text" name="receive_mobile" id="receive_mobile">&nbsp; '-' 를 제외하고 입력해주세요</td>
+                                                    </tr>
+                                                    
+                                                    <tr>
+                                                    <th><span class="order_important">남기실 말씀</span></th>
+                                                    <td>
+                                                   		<input type="text" name="receive_last_say" id="receive_last_say">
+                                                    </td>
+                                                    </tr>
+                                                    
+                                                    </tbody>
                                                     </table>
                                                 </div>
                                                 <!-- 배송 정보 -->
@@ -665,44 +639,48 @@
                                                 </div>
                                                 <div class="order_table_type order_info">
                                                     <table class="table_left order_info_table">
-                                                        <colgroup>
-                                                            <col style="width:20%">
-                                                            <col style="width:80%">
-                                                        </colgroup>
-                                                        <tbody>
-                                                            <tr>
-                                                                <th><span class="order_important">상품 합계 금액</span></th>
-                                                                <td><strong class="total_good_price" name="total_good_price" id="total_good_price"></strong>원</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <th><span class="order_important">배송비</span></th>
-                                                                <td><span class="deliver_fee">3,000원</span></td>
-                                                            </tr>
-                                                            <tr>
-                                                                <th><span class="order_important">적립</span></th>
-                                                                <td>
-                                                                    <ul class="order_benefit_list">
-                                                                        <%-- <li>할인 : <span class="save_mileage"></span>원</li> --%>
-                                                                        <li>마일리지 적립 : <span class="save_mileage"></span>원</li>
-                                                                        <input type="hidden" id="save_mileage" name="save_mileage" />
-                                                                    </ul>
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <th><span class="order_important">마일리지 사용</span></th>
-                                                                <td><input type="text" name="useMileage" id="useMileage">
-                                                                    <input type="checkbox" name="useMileageAll" id="useMileageAll" onclick="checkUseMileageAll()">
-                                                                    <label for="useMileageAll">전액 사용하기</label>
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <th><span class="order_important">최종 결제 금액</span></th>
-                                                                <td>
-                                                                	<input type="hidden" id="" name="" />
-                                                                    <strong id="totalPrice"></strong>원
-                                                                </td>
-                                                            </tr>
-                                                        </tbody>
+                                                    <colgroup>
+                                                        <col style="width:20%">
+                                                        <col style="width:80%">
+                                                    </colgroup>
+                                                    <tbody>
+                                                    
+                                                    <tr>
+                                                    <th><span class="order_important">상품 합계 금액</span></th>
+                                                    <td><strong class="total_good_price" name="total_good_price" id="total_good_price"></strong>원</td>
+                                                    </tr>
+                                                    <tr>
+                                                    <th><span class="order_important">배송비</span></th>
+                                                    <td><span class="deliver_fee">3,000원</span></td>
+                                                    </tr>
+                                                    
+                                                    <tr>
+                                                    <th><span class="order_important">적립</span></th>
+                                                    <td>
+                                                        <ul class="order_benefit_list">
+                                                        <%-- <li>할인 : <span class="save_mileage"></span>원</li> --%>
+                                                        <li>마일리지 적립 : <span class="save_mileage"></span>원</li>
+                                                        	<input type="hidden" id="save_mileage" name="save_mileage" />
+                                                        </ul>
+                                                    </td>
+                                                    </tr>
+                                                    <tr>
+                                                    <th><span class="order_important">마일리지 사용</span></th>
+                                                    <td><input type="text" name="useMileage" id="useMileage">
+                                                        <input type="checkbox" name="useMileageAll" id="useMileageAll" onclick="checkUseMileageAll()">
+                                                        <label for="useMileageAll">전액 사용하기</label>
+                                                    </td>
+                                                    </tr>
+                                                    
+                                                    <tr>
+                                                    <th><span class="order_important">최종 결제 금액</span></th>
+                                                    <td>
+                                                    	<input type="hidden" id="" name="" />
+                                                        <strong id="totalPrice"></strong>원
+                                                    </td>
+                                                    </tr>
+                                                    
+                                                    </tbody>
                                                     </table>
                                                 </div>
                                                 <!-- 결제 정보 -->
