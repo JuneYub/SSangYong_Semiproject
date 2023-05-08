@@ -1,4 +1,4 @@
-package parkjuenyub.order.model;
+package parkjuneyub.order.model;
 
 import parkjuneyub.member.model.MemberVO;
 

@@ -10,8 +10,8 @@ import javax.servlet.http.HttpServletResponse;
 import org.json.JSONObject;
 
 import common.controller.AbstractController;
-import parkjuenyub.order.model.OrderDeatailVO;
-import parkjuenyub.order.model.OrderVO;
+import parkjuneyub.order.model.OrderDeatailVO;
+import parkjuneyub.order.model.OrderVO;
 import parkjuneyub.board.model.BoardDAO;
 import parkjuneyub.board.model.InterBoardDAO;
 

@@ -15,8 +15,8 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
-import parkjuenyub.order.model.OrderDeatailVO;
-import parkjuenyub.order.model.OrderVO;
+import parkjuneyub.order.model.OrderDeatailVO;
+import parkjuneyub.order.model.OrderVO;
 import parkjuneyub.member.model.*;
 
 public class BoardDAO implements InterBoardDAO {

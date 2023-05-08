@@ -4,8 +4,8 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
-import parkjuenyub.order.model.OrderDeatailVO;
-import parkjuenyub.order.model.OrderVO;
+import parkjuneyub.order.model.OrderDeatailVO;
+import parkjuneyub.order.model.OrderVO;
 
 public interface InterBoardDAO {
 	
