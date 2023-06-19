@@ -12,7 +12,7 @@
 ---------------------
 </br>
 
-<H2>⭐  기능 구현 페이지  </H2> 
+<H2>⭐  직접 기능 구현한 페이지  </H2> 
 </br>
  
 <div style="text-align:center"><img src="./SemiProject/project_image/상품상세페이지.JPG" width="700" height="500">
@@ -22,14 +22,13 @@
 
 <img src="./SemiProject/project_image/상품상세페이지_상품후기작성.JPG" width="700" height="500">
 
-[상품 후기 페이지]
-center> 
+[상품 후기 페이지] <center> 
 
 <img src="./SemiProject/project_image/주문서작성_주문자정보.JPG" width="700" height="500"> 
 
 [주문서작성 페이지]
 
-<img src="./SemiProject/project_image/주문서작성_결제API.JPG" width="700" height="500"></ 
+<img src="./SemiProject/project_image/주문서작성_결제API.JPG" width="700" height="500">
 
 [결제API 연동]
 </div>
@@ -47,13 +46,9 @@ center>
 </div>
 
 
-쌍용 강북 교육센터 : 세미프로젝트
-
 진행기간 :
 
 2023.04.10 - 2023.04.28
 
-🐛  
 
-🔒  
 
